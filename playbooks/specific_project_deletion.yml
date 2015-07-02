@@ -11,16 +11,24 @@
         repo=https://github.com/alizamus/cloud_deletion_specific_project.git
         dest=/root/cloud_deletion_specific_project
         force=yes
+    - name: Delete the service instances
+      command: /root/cloud_deletion/delete-service-instances.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+    - pause: seconds=20
     - name: Delete the VMs
       command: /root/cloud_deletion_specific_project/delete-vm.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+    - pause: seconds=20
     - name: Delete the floating ips
       command: /root/cloud_deletion_specific_project/delete-floating-ip.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+    - pause: seconds=20
     - name: Delete the floating ip pools
       command: /root/cloud_deletion_specific_project/delete-floating-ip-pool.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+    - pause: seconds=20
     - name: Delete the networks
       command: /root/cloud_deletion_specific_project/delete-network.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+    - pause: seconds=20
     - name: Delete the users
       command: /root/cloud_deletion_specific_project/delete-user.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+    - pause: seconds=20
     - name: Delete the tenants
       command: /root/cloud_deletion_specific_project/delete-tenants.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
     - name: Removing the additional directories
