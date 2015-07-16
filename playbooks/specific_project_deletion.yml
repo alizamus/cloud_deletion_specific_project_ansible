@@ -11,6 +11,8 @@
         repo=https://github.com/alizamus/cloud_deletion_specific_project.git
         dest=/root/cloud_deletion_specific_project
         force=yes
+    - name: Assign admin user to the projects
+      command: /root/cloud_deletion_specific_project/assign_admin.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
     - name: Delete the service instances
       command: /root/cloud_deletion_specific_project/delete-service-instances.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
     - pause: seconds=20
