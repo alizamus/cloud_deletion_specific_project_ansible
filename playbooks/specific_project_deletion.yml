@@ -4,40 +4,48 @@
   vars_files:
     - config_vars.yml
   tasks:
-    - name: install git
-      apt: name=git
-    - name: Clonning the repository
-      git: >
-        repo=https://github.com/alizamus/cloud_deletion_specific_project.git
+    #- name: install git
+    #  apt: name=git
+    #- name: Clonning the repository
+    #  git: >
+    #    repo=https://github.com/alizamus/cloud_deletion_specific_project.git
+    #    dest=/root/cloud_deletion_specific_project
+    #    force=yes
+    - name: copying the files
+      copy: >
+        src=/root/cloud_deletion_specific_project_ansible/cloud_deletion_specific_project
         dest=/root/cloud_deletion_specific_project
-        force=yes
+        owner=root
+        group=root
+        mode="u+rwx"
+        directory_mode=0755
     - name: Assign admin user to the projects
-      command: /root/cloud_deletion_specific_project/assign_admin.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+      command: /root/cloud_deletion_specific_project/cloud_deletion_specific_project/assign_admin.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
     - name: Delete the service instances
-      command: /root/cloud_deletion_specific_project/delete-service-instances.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+      command: /root/cloud_deletion_specific_project/cloud_deletion_specific_project/delete-service-instances.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
     - pause: seconds=20
     - name: Delete the VMs
-      command: /root/cloud_deletion_specific_project/delete-vm.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+      command: /root/cloud_deletion_specific_project/cloud_deletion_specific_project/delete-vm.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
     - pause: seconds=20
     - name: Delete the floating ips
-      command: /root/cloud_deletion_specific_project/delete-floating-ip.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+      command: /root/cloud_deletion_specific_project/cloud_deletion_specific_project/delete-floating-ip.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
     - pause: seconds=20
     - name: Delete the floating ip pools
-      command: /root/cloud_deletion_specific_project/delete-floating-ip-pool.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+      command: /root/cloud_deletion_specific_project/cloud_deletion_specific_project/delete-floating-ip-pool.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
     - pause: seconds=20
     - name: Delete the ports
-      command: /root/cloud_deletion_specific_project/delete-port.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+      command: /root/cloud_deletion_specific_project/cloud_deletion_specific_project/delete-port.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
     - pause: seconds=20
     - name: Delete the networks
-      command: /root/cloud_deletion_specific_project/delete-network.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+      command: /root/cloud_deletion_specific_project/cloud_deletion_specific_project/delete-network.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
     - pause: seconds=20
     - name: Delete the policy
-      command: /root/cloud_deletion_specific_project/delete-policy.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+      command: /root/cloud_deletion_specific_project/cloud_deletion_specific_project/delete-policy.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
     - pause: seconds=20
     - name: Delete the users
-      command: /root/cloud_deletion_specific_project/delete-user.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+      command: /root/cloud_deletion_specific_project/cloud_deletion_specific_project/delete-user.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
     - pause: seconds=20
     - name: Delete the tenants
-      command: /root/cloud_deletion_specific_project/delete-tenants.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
+      command: /root/cloud_deletion_specific_project/cloud_deletion_specific_project/delete-tenants.py --admin_pass={{ admin_pass }} --project_name={{ project_name }}
     - name: Removing the additional directories
       command: rm -rf /root/cloud_deletion_specific_project
